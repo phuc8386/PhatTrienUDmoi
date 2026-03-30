@@ -1,0 +1,270 @@
+// Sample API Usage Examples
+// You can use tools like Postman, Insomnia, or curl to test these endpoints
+
+// ==================== ROLE ENDPOINTS ====================
+
+// 1. CREATE ROLE
+POST http://localhost:5000/api/roles
+Content-Type: application/json
+
+{
+  "name": "Admin",
+  "description": "Administrator role with full access"
+}
+
+// Response:
+// {
+//   "message": "Role created successfully",
+//   "data": {
+//     "_id": "507f1f77bcf86cd799439011",
+//     "name": "Admin",
+//     "description": "Administrator role with full access",
+//     "isDeleted": false,
+//     "createdAt": "2024-03-02T10:00:00.000Z",
+//     "updatedAt": "2024-03-02T10:00:00.000Z"
+//   }
+// }
+
+// ==================== CREATE MORE ROLES ====================
+
+POST http://localhost:5000/api/roles
+Content-Type: application/json
+
+{
+  "name": "User",
+  "description": "Regular user role"
+}
+
+POST http://localhost:5000/api/roles
+Content-Type: application/json
+
+{
+  "name": "Moderator",
+  "description": "Moderator role"
+}
+
+// ==================== GET ALL ROLES ====================
+
+GET http://localhost:5000/api/roles
+
+// Response:
+// {
+//   "message": "Roles retrieved successfully",
+//   "data": [
+//     {
+//       "_id": "507f1f77bcf86cd799439011",
+//       "name": "Admin",
+//       "description": "Administrator role with full access",
+//       "isDeleted": false,
+//       "createdAt": "2024-03-02T10:00:00.000Z",
+//       "updatedAt": "2024-03-02T10:00:00.000Z"
+//     },
+//     ...
+//   ]
+// }
+
+// ==================== GET ROLE BY ID ====================
+
+GET http://localhost:5000/api/roles/507f1f77bcf86cd799439011
+
+// Response:
+// {
+//   "message": "Role retrieved successfully",
+//   "data": {
+//     "_id": "507f1f77bcf86cd799439011",
+//     "name": "Admin",
+//     "description": "Administrator role with full access",
+//     "isDeleted": false,
+//     "createdAt": "2024-03-02T10:00:00.000Z",
+//     "updatedAt": "2024-03-02T10:00:00.000Z"
+//   }
+// }
+
+// ==================== UPDATE ROLE ====================
+
+PUT http://localhost:5000/api/roles/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+{
+  "name": "SuperAdmin",
+  "description": "Super Administrator role"
+}
+
+// ==================== DELETE ROLE (SOFT DELETE) ====================
+
+DELETE http://localhost:5000/api/roles/507f1f77bcf86cd799439011
+
+// Response:
+// {
+//   "message": "Role deleted successfully"
+// }
+
+// ==================== USER ENDPOINTS ====================
+
+// 1. CREATE USER
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "password": "securePassword123",
+  "email": "john@example.com",
+  "fullName": "John Doe",
+  "avatarUrl": "https://example.com/avatar.jpg",
+  "role": "507f1f77bcf86cd799439011"
+}
+
+// Response:
+// {
+//   "message": "User created successfully",
+//   "data": {
+//     "_id": "507f1f77bcf86cd799439012",
+//     "username": "john_doe",
+//     "password": "securePassword123",
+//     "email": "john@example.com",
+//     "fullName": "John Doe",
+//     "avatarUrl": "https://example.com/avatar.jpg",
+//     "status": false,
+//     "role": "507f1f77bcf86cd799439011",
+//     "loginCount": 0,
+//     "isDeleted": false,
+//     "createdAt": "2024-03-02T10:00:00.000Z",
+//     "updatedAt": "2024-03-02T10:00:00.000Z"
+//   }
+// }
+
+// ==================== CREATE MORE USERS ====================
+
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "username": "jane_smith",
+  "password": "anotherPassword456",
+  "email": "jane@example.com",
+  "fullName": "Jane Smith",
+  "role": "507f1f77bcf86cd799439012"
+}
+
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "username": "bob_wilson",
+  "password": "bobPassword789",
+  "email": "bob@example.com",
+  "fullName": "Bob Wilson"
+}
+
+// ==================== GET ALL USERS ====================
+
+GET http://localhost:5000/api/users
+
+// Response includes all users with populated role data
+
+// ==================== GET USER BY ID ====================
+
+GET http://localhost:5000/api/users/507f1f77bcf86cd799439012
+
+// ==================== UPDATE USER ====================
+
+PUT http://localhost:5000/api/users/507f1f77bcf86cd799439012
+Content-Type: application/json
+
+{
+  "fullName": "John Doe Updated",
+  "loginCount": 5,
+  "avatarUrl": "https://example.com/new-avatar.jpg"
+}
+
+// ==================== ENABLE USER (Set status = true) ====================
+
+POST http://localhost:5000/api/users/enable
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "username": "john_doe"
+}
+
+// Response:
+// {
+//   "message": "User enabled successfully",
+//   "data": {
+//     "_id": "507f1f77bcf86cd799439012",
+//     "username": "john_doe",
+//     "email": "john@example.com",
+//     "fullName": "John Doe Updated",
+//     "status": true,  <-- Status is now TRUE
+//     "loginCount": 5,
+//     "isDeleted": false,
+//     "createdAt": "2024-03-02T10:00:00.000Z",
+//     "updatedAt": "2024-03-02T10:03:00.000Z"
+//   }
+// }
+
+// ==================== DISABLE USER (Set status = false) ====================
+
+POST http://localhost:5000/api/users/disable
+Content-Type: application/json
+
+{
+  "email": "jane@example.com",
+  "username": "jane_smith"
+}
+
+// Response:
+// {
+//   "message": "User disabled successfully",
+//   "data": {
+//     "_id": "507f1f77bcf86cd799439013",
+//     "username": "jane_smith",
+//     "email": "jane@example.com",
+//     "fullName": "Jane Smith",
+//     "status": false,  <-- Status is now FALSE
+//     "loginCount": 0,
+//     "isDeleted": false,
+//     "createdAt": "2024-03-02T10:00:00.000Z",
+//     "updatedAt": "2024-03-02T10:04:00.000Z"
+//   }
+// }
+
+// ==================== DELETE USER (SOFT DELETE) ====================
+
+DELETE http://localhost:5000/api/users/507f1f77bcf86cd799439012
+
+// Response:
+// {
+//   "message": "User deleted successfully"
+// }
+
+// ==================== ERROR EXAMPLES ====================
+
+// Enable user with wrong credentials
+POST http://localhost:5000/api/users/enable
+Content-Type: application/json
+
+{
+  "email": "wrong@example.com",
+  "username": "nonexistent"
+}
+
+// Response:
+// {
+//   "message": "User not found with provided email and username"
+// }
+
+// Create duplicate user
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "password": "password123",
+  "email": "different@example.com"
+}
+
+// Response:
+// {
+//   "message": "Username or email already exists"
+// }
